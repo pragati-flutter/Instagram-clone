@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916679999524",
+    "project_id": "instragram-clone-ec2de",
+    "storage_bucket": "instragram-clone-ec2de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916679999524:android:24b9e54f9daa72895518b1",
+        "android_client_info": {
+          "package_name": "com.prakha.instagram_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTFIozliW3zNIFZBGuFOMqSfxF7g-yoek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
