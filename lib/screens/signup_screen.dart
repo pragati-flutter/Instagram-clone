@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_method.dart';
+import 'package:instagram_clone/screens/login_screen.dart';
 
 import 'package:instagram_clone/widgets/text_field_input.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -37,6 +38,14 @@ class _SignupScreenState extends State<SignupScreen> {
     _usernameController.dispose();
   }
 
+  void navigateToLogin() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) =>
+            const LoginScreen()
+        ));
+  }
+
+
   void signUpUser() async {
     setState(() {
       _isLoading = true;
@@ -49,7 +58,7 @@ class _SignupScreenState extends State<SignupScreen> {
       bio: _bioController.text,
       file: _image,
     );
-    print(res);
+
     setState(() {
       _isLoading = false;
     });
@@ -57,11 +66,14 @@ class _SignupScreenState extends State<SignupScreen> {
     if (res != 'success') {
       showSnackBar(res, context);
     } else {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)
-      =>
-      const ResponsiveScreenLayout(
-        mobileScreenLayout: MobileScreenLayout(),
-        webScreenLayout: WebScreenLayout(),
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) =>
+        const ResponsiveScreenLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout()
+        ),
+        ),
+      );
     }
   }
 
@@ -198,12 +210,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: const Text("Don't have an account?"),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: navigateToLogin,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 8,
                         ),
-                        child: const Text("Sign up?"),
+                        child: const Text("Login"),
                       ),
                     ),
                   ],

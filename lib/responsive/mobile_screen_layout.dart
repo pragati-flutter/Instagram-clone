@@ -1,11 +1,51 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class MobileScreenLayout extends StatelessWidget {
+import 'package:instagram_clone/utils/colors.dart';
+
+class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
 
   @override
+  State<MobileScreenLayout> createState() => _MobileScreenLayoutState();
+}
+
+class _MobileScreenLayoutState extends State<MobileScreenLayout> {
+  final int _page = 0;
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("This is mobile")),
+    return Scaffold(
+      body: const Center(child: Text("This is mobile Screen")),
+      bottomNavigationBar: CupertinoTabBar(
+        backgroundColor: mobileBackgroundColor,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home,
+                  color: _page == 0 ? primaryColor : secondaryColor),
+              label: "",
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search,
+                  color: _page == 0 ? primaryColor : secondaryColor),
+              label: "",
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle,
+                  color: _page == 0 ? primaryColor : secondaryColor),
+              label: "",
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite,
+                  color: _page == 0 ? primaryColor : secondaryColor),
+              label: "",
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person,
+                  color: _page == 0 ? primaryColor : secondaryColor),
+              label: "",
+              backgroundColor: primaryColor),
+        ],
+      ),
     );
   }
 }

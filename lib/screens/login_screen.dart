@@ -8,6 +8,10 @@ import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_screen_layout.dart';
+import '../responsive/web_screen_layout.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -43,7 +47,14 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = false;
     });
     if (res == "success") {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>const HomeScreen()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) =>
+          const ResponsiveScreenLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout()
+          ),
+          )
+          );
     } else {
       showSnackBar(res, context);
     }
