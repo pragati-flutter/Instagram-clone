@@ -35,11 +35,34 @@ class FireStoreMethods {
       _firestore.collection('post').doc(postId).set(
             post.ToJson(),
           );
+      print("Post uploaded with postId: $postId");
       res = "success";
-
     } catch (err) {
       res = err.toString();
     }
     return res;
+  }
+
+  Future<void> likePost(String uid, String postId, List likes) async {
+    try {
+
+
+
+      if (likes.contains(uid)) {
+
+        await _firestore.collection('post').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid]),
+
+        });
+        print("Removed like from postId: $postId");
+      } else {
+        await _firestore.collection('post').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid]),
+        });
+
+      }
+    } catch (e) {
+      print("Error in likePost: ${e.toString()}");
+    }
   }
 }
