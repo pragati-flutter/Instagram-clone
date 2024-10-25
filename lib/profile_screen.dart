@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/resources/auth_method.dart';
 import 'package:instagram_clone/resources/firebase_methods.dart';
+import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/fallow_button.dart';
@@ -49,11 +51,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get();
       postLen = postSnap.docs.length;
       followers = userSnap.data()!['followers'].length;
-      followers = userSnap.data()!['fallowing'].length;
+      fallowing = userSnap.data()!['fallowing'].length;
       isFollowing = userSnap
-          .data()!['fallowers']
+          .data()!['followers']
           .contains(FirebaseAuth.instance.currentUser!.uid);
-      setState(() {});
+      setState(() {
+        setState(() {
+          isLoading = false;
+        });
+      });
     } catch (e) {
       showSnackBar(e.toString(), context);
       setState(() {
@@ -82,7 +88,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.grey,
-                            backgroundImage: NetworkImage(userData['photoUrl']),
+                            backgroundImage: userData['photoUrl'] != null && userData['photoUrl'].isNotEmpty
+                                ? NetworkImage(userData['photoUrl'])
+                                : const NetworkImage('https://imgs.search.brave.com/wbDdni3blnHJNeFCyLaRzOgMvodB5EGM0Y7y5porw-0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9saDUu/Z29vZ2xldXNlcmNv/bnRlbnQuY29tLy1E/S3FHVEpIbmlZSS9B/QUFBQUFBQUFBSS9B/QUFBQUFBQUFNVS9a/WmcwNno1MVlCZy9w/aG90by5qcGc_c3o9/NjQ'),
                             radius: 40,
                           ),
                           Expanded(
@@ -108,9 +116,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             backgroundColor:
                                                 mobileBackgroundColor,
                                             borderColor: Colors.grey,
-                                            text: 'Edit Profile',
+                                            text: 'Signed Out',
                                             textColor: primaryColor,
-                                            function: () {},
+                                            function: () {
+                                              AuthMethods().signedOut();
+                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const LoginScreen()));
+                                            },
                                           )
                                         : isFollowing
                                             ? FallowButton(
@@ -125,6 +136,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .currentUser!.uid,
                                                     userData['uid'],
                                                   );
+                                                  setState(() {
+                                                    isFollowing = false;
+                                                    followers--;
+                                                  });
                                                 })
                                             : FallowButton(
                                                 backgroundColor: Colors.blue,
@@ -138,6 +153,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .currentUser!.uid,
                                                     userData['uid'],
                                                   );
+                                                  setState(() {
+                                                    isFollowing = true;
+                                                    followers++;
+                                                  });
                                                 })
                                   ],
                                 ),

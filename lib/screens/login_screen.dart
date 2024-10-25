@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/auth_method.dart';
 import 'package:instagram_clone/screens/home_screen.dart';
+import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigate(){
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>const HomeScreen()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>const SignupScreen()));
   }
 
   void loginUser() async {
@@ -98,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
               InkWell(
                 onTap: loginUser,
                 child: Container(
-                    child:_isLoading ? Center(child: CircularProgressIndicator(color: primaryColor,)):
+                    child:_isLoading ? const Center(child: CircularProgressIndicator(color: primaryColor,)):
                     const Text('Log in'),
                     width: double.infinity,
                     alignment: Alignment.center,
